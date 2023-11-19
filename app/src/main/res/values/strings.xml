@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Validation and FocusRequest Etude</string>
+    <string name="smth_get_wrong">что-то пошло не так...</string>
+    <string name="not_enough_chars">недостаточно символов</string>
+    <string name="is_too_long">слишком длинное слово</string>
+    <string name="not_allowed_chars">недопустимые символы</string>
+    <string name="name">имя</string>
+    <string name="clever">умный</string>
+    <string name="activity">деятельность</string>
+    <string name="mind">ум</string>
+</resources>
