@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.example.validation_etude.R
+import com.example.validation_etude.ui.form.FocusedState
 import com.example.validation_etude.ui.reusable.components.ValidatedOutlinedTextField
 import com.example.validation_etude.ui.reusable.utils.UiText
 import com.example.validation_etude.ui.reusable.utils.validateName
@@ -23,12 +24,13 @@ fun CleverBlock(
     onIsCleverChanged: (Boolean) -> Unit,
     activity: String,
     onActivityChanged: (String) -> Unit,
-    modifier: Modifier
+    modifier: Modifier,
+    focused: FocusedState
 ) {
     OutlinedCardWithTitle(
         title = UiText.StringRes(R.string.mind).asString(),
         modifier = modifier.fillMaxWidth(),
-        content = { interactionSource, onContentClick ->
+        content = { interactionSource, onContentClick, _, modifier ->
             CleverContent(
                 isClever = isClever,
                 onIsCleverChanged = onIsCleverChanged,
@@ -36,7 +38,8 @@ fun CleverBlock(
                 onActivityChanged = onActivityChanged,
                 modifier = modifier,
                 interactionSource = interactionSource,
-                onContentClickFocusManage = onContentClick
+                onContentClickFocusManage = onContentClick,
+                focused = focused
             )
         }
     )
@@ -53,19 +56,22 @@ fun CleverContent(
     modifier: Modifier,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     onContentClickFocusManage: () -> Unit = {},
+    focused: FocusedState = FocusedState(2)
 ) {
     Column{
         isClever(
             isClever = isClever,
             onIsCleverChanged = onIsCleverChanged,
             onClickFocusManage = onContentClickFocusManage,
-            modifier = Modifier
+            modifier = Modifier,
+            focused = focused.toChild(0,1)
         )
         Activity(
             activity = activity,
             onActivityChanged = onActivityChanged,
             interactionSource = interactionSource,
-            modifier = Modifier
+            modifier = Modifier,
+            focused = focused.toChild(1,2)
         )
     }
 }
@@ -75,7 +81,8 @@ fun Activity(
     activity: String,
     onActivityChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    focused: FocusedState = FocusedState(1)
 ) {
     var isError by remember { mutableStateOf(false) }
     ValidatedOutlinedTextField(
@@ -87,7 +94,8 @@ fun Activity(
         labelRes = R.string.activity,
         placeholderRes = R.string.activity,
         modifier = modifier,
-        interactionSource = interactionSource
+        interactionSource = interactionSource,
+        focused = focused.first
     )
 }
 
@@ -97,6 +105,7 @@ fun isClever(
     onIsCleverChanged: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
     onClickFocusManage: () -> Unit = {},
+    focused: FocusedState = FocusedState(1)
     ) {
         CheckBoxWithText(
             label = UiText.StringRes(R.string.clever).asString(),
@@ -105,7 +114,8 @@ fun isClever(
                 onClickFocusManage()
                 val newIsClever = onIndeterminateClick(isClever)
                 onIsCleverChanged(newIsClever)
-            })
+            },
+            focused = focused.first)
 }
 
 @Composable
@@ -113,7 +123,8 @@ fun NameBlock(
     name: String,
     onNameChanged: (String) -> Unit,
     modifier: Modifier = Modifier,
-    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
+    interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
+    focused: FocusedState = FocusedState(1)
 ) {
     var isError by remember { mutableStateOf(false) }
     ValidatedOutlinedTextField(
@@ -125,6 +136,7 @@ fun NameBlock(
         labelRes = R.string.name,
         placeholderRes = R.string.name,
         modifier = modifier,
-        interactionSource = interactionSource
+        interactionSource = interactionSource,
+        focused = focused.first
     )
 }

@@ -39,11 +39,7 @@ fun FormScreen(modifier: Modifier = Modifier) {
     LaunchedEffect(uiState) {
         if (uiState is FormState.Main) setFabState(
             FabState(
-                onClick = {
-                    viewmodel.onEvent(
-                        FormEvent.OnSave
-                    )
-                },
+                onClick = { viewmodel.onEvent(FormEvent.OnSave) },
                 icon = IconSetup(
                     imageVector = Icons.Default.SaveAlt,
                     contentDescription = UiText.String("save") //ToDo Strings!
@@ -54,7 +50,12 @@ fun FormScreen(modifier: Modifier = Modifier) {
     }
     when (uiState) {
         is FormState.Error -> viewmodel.error()
-        is FormState.Main -> FormScreen(uiState = uiState as FormState.Main, onEvent = viewmodel::onEvent)
+        is FormState.Main ->
+            FormScreen(
+                uiState = uiState as FormState.Main,
+                onEvent = viewmodel::onEvent,
+                modifier = modifier
+            )
     }
 
 }
@@ -72,6 +73,7 @@ fun FormScreen(
         onIsCleverChanged = { onEvent(FormEvent.OnIsCleverChanged(it)) },
         activity = uiState.activity,
         onActivityChanged = { onEvent(FormEvent.OnActivityChanged(it)) },
+        focusedElements = uiState.focused,
         modifier = modifier
     )
 }
@@ -84,6 +86,7 @@ fun FormScreen(
     onIsCleverChanged: (Boolean) -> Unit,
     activity: String,
     onActivityChanged: (String) -> Unit,
+    focusedElements: FocusedState,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -95,14 +98,16 @@ fun FormScreen(
         NameBlock(
             name = name,
             onNameChanged = onNameChanged,
-            modifier = Modifier
+            modifier = Modifier,
+            focused = focusedElements.toChild(0, 1)
         )
         CleverBlock(
             isClever = isClever,
             onIsCleverChanged = onIsCleverChanged,
             activity = activity,
             onActivityChanged = onActivityChanged,
-            modifier = modifier
+            modifier = modifier,
+            focused =  focusedElements.toChild(1, 3)
         )
     }
 }

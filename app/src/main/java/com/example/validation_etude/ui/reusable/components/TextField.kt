@@ -21,6 +21,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.VisualTransformation
@@ -42,10 +44,14 @@ fun ValidatedOutlinedTextField(
     @StringRes supportingTextRes: Int? = null,
     interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default,
-    visualTransformation: VisualTransformation = VisualTransformation.None
+    visualTransformation: VisualTransformation = VisualTransformation.None,
+    focused: Boolean = false
 ) {
     var inputText by remember { mutableStateOf(text) }
     var errorMessageRes by remember { mutableIntStateOf(R.string.app_name) }
+    val focusRequester = remember { FocusRequester() }
+
+    if (focused) focusRequester.requestFocus()
 
     fun validate(unvalidated: String) {
         val validationResult = validator(unvalidated)
@@ -66,7 +72,8 @@ fun ValidatedOutlinedTextField(
                     inputText = text
                 }
             }
-            .padding(horizontal = 4.dp),
+            .padding(horizontal = 4.dp)
+            .focusRequester(focusRequester),
         value = inputText,
         onValueChange = {
             inputText = it

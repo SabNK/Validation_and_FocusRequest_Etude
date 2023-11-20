@@ -8,4 +8,8 @@
     <string name="clever">умный</string>
     <string name="activity">деятельность</string>
     <string name="mind">ум</string>
+    <string name="recorded">записано...</string>
+    <string name="name_error">ошибка в имени</string>
+    <string name="is_clever_error">ошибка в уме</string>
+    <string name="activity_error">ошибка в деятельности</string>
 </resources>

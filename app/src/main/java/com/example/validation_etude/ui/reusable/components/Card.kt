@@ -33,23 +33,29 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.validation_etude.ui.form.FocusedState
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutlinedCardWithTitle(
-    content: @Composable ColumnScope.(MutableInteractionSource, () -> Unit) -> Unit,
+    content: @Composable ColumnScope.(
+        interactionSource: MutableInteractionSource,
+        onClickAtContent: () -> Unit,
+        focused: FocusedState,
+        modifier: Modifier) -> Unit,
     title: String?,
     modifier: Modifier = Modifier,
+    focusedContent: FocusedState = FocusedState(1) //ToDo this implementation prevents from Content layout change
 ) {
     val interactionSource: MutableInteractionSource = remember { MutableInteractionSource() }
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     var focusOnCard by remember { mutableStateOf(false) }
     val focusOnContent by interactionSource.collectIsFocusedAsState()
-    val focused = focusOnCard or focusOnContent
+    val focusedCard = focusOnCard || focusOnContent || !focusedContent.notFocused
     //ToDo Check and replace with the Theme color
-    val color  = if (focused) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
+    val color  = if (focusedCard) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
 
     fun onClickAtContentOrCard() {
         focusManager.clearFocus()
@@ -64,12 +70,21 @@ fun OutlinedCardWithTitle(
                 .onFocusChanged { focusOnCard = it.isFocused }
                 .focusable()
                 .padding(top = 8.dp),
-            shape = RoundedCornerShape(if (focused) 4.dp else 2.dp),
-            border = BorderStroke(if (focused) 2.dp else 1.dp, color),
+            shape = RoundedCornerShape(if (focusedCard) 4.dp else 2.dp),
+            border = BorderStroke(if (focusedCard) 2.dp else 1.dp, color),
             interactionSource = interactionSource,
             color = MaterialTheme.colorScheme.onPrimary
         ) {
-            Column(content = {content(interactionSource, ::onClickAtContentOrCard)})
+            Column(
+                content = {
+                    content(
+                        interactionSource = interactionSource,
+                        onClickAtContent = ::onClickAtContentOrCard,
+                        focused = focusedContent,
+                        modifier = Modifier
+                    )
+                }
+            )
         }
         Row(
             horizontalArrangement = Arrangement.Center,
@@ -96,7 +111,7 @@ fun OutlinedCardWithTitle(
 @Composable
 fun CardPreview () {
     OutlinedCardWithTitle(
-        content = {_, _ ->
+        content = {_, _, _, _ ->
             Column {
                 Spacer(
                     modifier = Modifier.height(60.dp)
@@ -126,7 +141,7 @@ fun CardPreview () {
 @Composable
 fun NewCardPreview() {
     OutlinedCardWithTitle(
-        content = {_, _ ->
+        content = {_, _, _, _ ->
             Column {
                 Text(
                     text = "Hello content",

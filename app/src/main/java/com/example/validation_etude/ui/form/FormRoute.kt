@@ -1,5 +1,6 @@
 package com.example.validation_etude.ui.form
 
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
@@ -45,7 +46,7 @@ fun FormRoute() {
                 }
             }
         ) { padding ->
-            FormScreen()
+            FormScreen(modifier = Modifier.padding(padding))
         }
     }
 }

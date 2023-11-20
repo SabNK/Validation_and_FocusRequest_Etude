@@ -1,12 +1,16 @@
 package ru.polescanner.droidmvp.ui.reusablecomponents
 
+import androidx.compose.foundation.focusable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.material3.TriStateCheckbox
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.state.ToggleableState
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -16,14 +20,18 @@ fun CheckBoxWithText(
     //ToDo maybe UiText
     label: String?,
     uiState: Boolean?,
-    onClick: (Boolean) -> Unit
+    onClick: (Boolean) -> Unit,
+    focused: Boolean = false
 ) {
+    val focusRequester = remember {FocusRequester()}
+    if (focused) focusRequester.requestFocus()
     Row(
         verticalAlignment = Alignment.CenterVertically
         ) {
         TriStateCheckbox(
             state = uiState.toToggleableState(),
-            onClick = { onClick(uiState.nextState()) }
+            onClick = { onClick(uiState.nextState()) },
+            modifier = Modifier.focusRequester(focusRequester).focusable()
         )
         label?.let {
             Text(
