@@ -15,7 +15,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.MaterialTheme.typography
 import androidx.compose.material3.Surface
@@ -35,8 +34,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.validation_etude.ui.form.FocusedState
 
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OutlinedCardWithTitle(
     content: @Composable ColumnScope.(
@@ -53,7 +50,7 @@ fun OutlinedCardWithTitle(
     val focusManager = LocalFocusManager.current
     var focusOnCard by remember { mutableStateOf(false) }
     val focusOnContent by interactionSource.collectIsFocusedAsState()
-    val focusedCard = focusOnCard || focusOnContent || !focusedContent.notFocused
+    val focusedCard = focusOnCard || focusOnContent || focusedContent.hasFocus
     //ToDo Check and replace with the Theme color
     val color  = if (focusedCard) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.outline
 

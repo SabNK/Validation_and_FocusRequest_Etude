@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Validation and FocusRequest Etude</string>
-    <string name="smth_get_wrong">что-то пошло не так...</string>
+    <string name="smth_get_wrong">что-то пошло не так&#8230;</string>
     <string name="not_enough_chars">недостаточно символов</string>
     <string name="is_too_long">слишком длинное слово</string>
     <string name="not_allowed_chars">недопустимые символы</string>
@@ -8,8 +8,8 @@
     <string name="clever">умный</string>
     <string name="activity">деятельность</string>
     <string name="mind">ум</string>
-    <string name="recorded">записано...</string>
-    <string name="name_error">ошибка в имени</string>
-    <string name="is_clever_error">ошибка в уме</string>
-    <string name="activity_error">ошибка в деятельности</string>
+    <string name="recorded">записано&#8230;</string>
+    <string name="name_error">не заполнено имя</string>
+    <string name="is_clever_error">поставьте/уберите галочку в умный</string>
+    <string name="activity_error">не заполнена деятельность</string>
 </resources>

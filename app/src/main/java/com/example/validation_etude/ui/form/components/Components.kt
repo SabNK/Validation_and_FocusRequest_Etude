@@ -30,18 +30,19 @@ fun CleverBlock(
     OutlinedCardWithTitle(
         title = UiText.StringRes(R.string.mind).asString(),
         modifier = modifier.fillMaxWidth(),
-        content = { interactionSource, onContentClick, _, modifier ->
+        content = { interactionSource, onContentClick, _, contentModifier ->
             CleverContent(
                 isClever = isClever,
                 onIsCleverChanged = onIsCleverChanged,
                 activity = activity,
                 onActivityChanged = onActivityChanged,
-                modifier = modifier,
+                modifier = contentModifier,
                 interactionSource = interactionSource,
                 onContentClickFocusManage = onContentClick,
                 focused = focused
             )
-        }
+        },
+        focusedContent = focused
     )
 
 
@@ -58,8 +59,8 @@ fun CleverContent(
     onContentClickFocusManage: () -> Unit = {},
     focused: FocusedState = FocusedState(2)
 ) {
-    Column{
-        isClever(
+    Column(modifier = modifier){
+        IsClever(
             isClever = isClever,
             onIsCleverChanged = onIsCleverChanged,
             onClickFocusManage = onContentClickFocusManage,
@@ -100,7 +101,7 @@ fun Activity(
 }
 
 @Composable
-fun isClever(
+fun IsClever(
     isClever: Boolean?,
     onIsCleverChanged: (Boolean) -> Unit,
     modifier: Modifier = Modifier,
@@ -115,6 +116,7 @@ fun isClever(
                 val newIsClever = onIndeterminateClick(isClever)
                 onIsCleverChanged(newIsClever)
             },
+            modifier = modifier,
             focused = focused.first)
 }
 

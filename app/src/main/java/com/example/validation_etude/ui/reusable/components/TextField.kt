@@ -99,7 +99,10 @@ fun ValidatedOutlinedTextField(
             } else {
                 Icon(Icons.Default.Clear,
                      "clear text",
-                     modifier = Modifier.clickable { inputText = "" })
+                     modifier = Modifier.clickable {
+                         inputText = ""
+                         validate(inputText) //It is important to validate after update state
+                     })
             }
         },
         supportingText = {

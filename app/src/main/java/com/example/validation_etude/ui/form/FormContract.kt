@@ -7,7 +7,7 @@ import com.example.validation_etude.ui.reusable.utils.UiState
 import com.example.validation_etude.ui.reusable.utils.UiText
 import com.example.validation_etude.ui.reusable.utils.validateName
 
-private const val TAG = "Focused"
+
 @Immutable
 sealed interface FormState: UiState {
     data class Main(
@@ -25,6 +25,7 @@ sealed interface FormState: UiState {
     data class Error(val error: UiText): FormState
 }
 
+@Immutable
 data class FocusedState (val size: Int, val focusedIndex: Int? = null) {
     init {
         require (size in 1..99 ) {"Not valid elements number"}
@@ -32,9 +33,8 @@ data class FocusedState (val size: Int, val focusedIndex: Int? = null) {
     }
     val isFocused: List<Boolean> = (0 until size).map{ it == focusedIndex }
     val notFocused = focusedIndex == null
+    val hasFocus = focusedIndex != null
     fun toChild(from: Int, to: Int): FocusedState {
-        //Log.d(TAG, "toChild: from $from , to $to , focusedIndex $focusedIndex ")
-        //Log.d(TAG, "toChild: new ${focusedIndex?.let{ if (focusedIndex in from..to) (focusedIndex - from) else null }}")
         require (from < to) { "child list should contains at least one element"  }
         require ( to - from < size) { "child list should be smaller than parent" }
         return FocusedState(to-from, focusedIndex?.let{ if (focusedIndex in from until to) focusedIndex - from else null })
