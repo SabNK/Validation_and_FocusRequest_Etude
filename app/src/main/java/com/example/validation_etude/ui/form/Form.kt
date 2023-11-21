@@ -21,6 +21,7 @@ import com.example.validation_etude.ui.form.components.CleverBlock
 import com.example.validation_etude.ui.form.components.NameBlock
 import com.example.validation_etude.ui.reusable.components.FabState
 import com.example.validation_etude.ui.reusable.components.LocalSetFabState
+import com.example.validation_etude.ui.reusable.utils.FocusedState
 import com.example.validation_etude.ui.reusable.utils.IconSetup
 import com.example.validation_etude.ui.reusable.utils.UiText
 

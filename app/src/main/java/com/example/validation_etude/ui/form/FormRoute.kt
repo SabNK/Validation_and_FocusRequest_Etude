@@ -2,7 +2,6 @@ package com.example.validation_etude.ui.form
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -19,7 +18,6 @@ import com.example.validation_etude.ui.reusable.components.FabState
 import com.example.validation_etude.ui.reusable.components.LocalSetFabState
 import com.example.validation_etude.ui.reusable.utils.visible
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FormRoute() {
     val snackbarHostState = remember { SnackbarHostState() }

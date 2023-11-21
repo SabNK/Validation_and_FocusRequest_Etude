@@ -1,6 +1,5 @@
 package com.example.validation_etude.ui.reusable.utils
 
-import androidx.compose.runtime.Immutable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.validation_etude.R
@@ -32,8 +31,3 @@ abstract class AbstractViewModel <S: UiState, E: UiEvent>: ViewModel() {
     }
 }
 
-@Immutable
-interface UiEvent
-
-@Immutable
-interface UiState

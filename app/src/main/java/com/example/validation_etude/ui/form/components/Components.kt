@@ -10,7 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import com.example.validation_etude.R
-import com.example.validation_etude.ui.form.FocusedState
+import com.example.validation_etude.ui.reusable.utils.FocusedState
 import com.example.validation_etude.ui.reusable.components.ValidatedOutlinedTextField
 import com.example.validation_etude.ui.reusable.utils.UiText
 import com.example.validation_etude.ui.reusable.utils.validateName

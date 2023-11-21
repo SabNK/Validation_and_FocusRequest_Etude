@@ -1,6 +1,7 @@
 package com.example.validation_etude.ui.form
 
 import androidx.compose.runtime.Immutable
+import com.example.validation_etude.ui.reusable.utils.FocusedState
 import com.example.validation_etude.ui.reusable.utils.Result
 import com.example.validation_etude.ui.reusable.utils.UiEvent
 import com.example.validation_etude.ui.reusable.utils.UiState
@@ -11,7 +12,7 @@ import com.example.validation_etude.ui.reusable.utils.validateName
 @Immutable
 sealed interface FormState: UiState {
     data class Main(
-        val name: String = "",
+        val name: String = "", //data class Name: val value: String, val focused: Boolean
         val isClever: Boolean? = null,
         val activity: String = "",
         val focused: FocusedState = FocusedState(3)
@@ -23,23 +24,6 @@ sealed interface FormState: UiState {
         ).all { it }
     }
     data class Error(val error: UiText): FormState
-}
-
-@Immutable
-data class FocusedState (val size: Int, val focusedIndex: Int? = null) {
-    init {
-        require (size in 1..99 ) {"Not valid elements number"}
-        require( focusedIndex?.let{ it in 0 until size }?:true ) {"focused index should be within total counts"}
-    }
-    val isFocused: List<Boolean> = (0 until size).map{ it == focusedIndex }
-    val notFocused = focusedIndex == null
-    val hasFocus = focusedIndex != null
-    fun toChild(from: Int, to: Int): FocusedState {
-        require (from < to) { "child list should contains at least one element"  }
-        require ( to - from < size) { "child list should be smaller than parent" }
-        return FocusedState(to-from, focusedIndex?.let{ if (focusedIndex in from until to) focusedIndex - from else null })
-    }
-    val first = focusedIndex?.let{it == 0} ?: false
 }
 
 @Immutable

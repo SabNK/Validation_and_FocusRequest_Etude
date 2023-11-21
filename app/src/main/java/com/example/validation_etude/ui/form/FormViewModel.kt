@@ -3,6 +3,7 @@ package com.example.validation_etude.ui.form
 import android.util.Log
 import com.example.validation_etude.R
 import com.example.validation_etude.ui.reusable.utils.AbstractViewModel
+import com.example.validation_etude.ui.reusable.utils.FocusedState
 import com.example.validation_etude.ui.reusable.utils.Notice
 import com.example.validation_etude.ui.reusable.utils.Result
 import com.example.validation_etude.ui.reusable.utils.validateName
